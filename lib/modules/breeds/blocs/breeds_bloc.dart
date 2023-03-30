@@ -36,7 +36,7 @@ class BreedsBloc extends BlocModule {
         hasError: false,
       );
     } on Failure {
-            _breedsBloc.value = _breedsBloc.value.copyWith(
+      _breedsBloc.value = _breedsBloc.value.copyWith(
         hasError: true,
       );
       rethrow;
@@ -51,7 +51,6 @@ class BreedsBloc extends BlocModule {
   }
 
   Future<BreedImage> getBreedImage(String referencedImageId) async {
-
     try {
       return _breedsService.getBreedImage(referencedImageId);
     } on Failure {
@@ -68,5 +67,15 @@ class BreedsBloc extends BlocModule {
   @override
   FutureOr<void> dispose() {
     _breedsBloc.dispose();
+  }
+
+  void filterBreeds(String value) {
+    final filteredBreeds = _breedsBloc.value.allBreads
+        .where((bred) => bred.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+
+    _breedsBloc.value = _breedsBloc.value.copyWith(
+      breeds: filteredBreeds,
+    );
   }
 }

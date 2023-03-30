@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/breed_model.dart';
 import 'breed_item.dart';
+import 'breed_search_input.dart';
 
 class BreedsList extends StatelessWidget {
   const BreedsList({Key? key, required this.breeds}) : super(key: key);
@@ -14,7 +15,7 @@ class BreedsList extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 12),
-          //child: const BreedSearchInput(),
+          child: const BreedSearchInput(),
         ),
         breeds.isEmpty
             ? Center(

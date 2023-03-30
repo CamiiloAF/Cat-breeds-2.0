@@ -2,7 +2,7 @@ import 'package:aleteo_triqui/app_config.dart';
 import 'package:aleteo_triqui/blocs/bloc_user_notifications.dart';
 import 'package:aleteo_triqui/exceptions/failure.dart';
 import 'package:aleteo_triqui/modules/breeds/blocs/breeds_bloc.dart';
-import 'package:aleteo_triqui/modules/breeds/ui/page/breeds_page.dart';
+import 'package:aleteo_triqui/modules/breeds/ui/pages/breeds_page.dart';
 import 'package:aleteo_triqui/modules/breeds/ui/widgets/breeds_list.dart';
 import 'package:aleteo_triqui/services/breeds_service.dart';
 import 'package:flutter/material.dart';

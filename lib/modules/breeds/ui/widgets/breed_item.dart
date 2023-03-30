@@ -1,4 +1,3 @@
-import 'package:aleteo_triqui/modules/breeds/ui/page/breed_detail_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app_config.dart';
@@ -6,6 +5,7 @@ import '../../../../blocs/navigator_bloc.dart';
 import '../../blocs/breeds_bloc.dart';
 import '../../models/breed_image_model.dart';
 import '../../models/breed_model.dart';
+import '../pages/breed_detail_page.dart';
 import 'breed_cache_image.dart';
 import 'breed_image_placeholder.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app_config.dart';
 import '../../blocs/bloc_user_notifications.dart';
 import '../../blocs/navigator_bloc.dart';
-import '../breeds/ui/page/breeds_page.dart';
+import '../breeds/ui/pages/breeds_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
