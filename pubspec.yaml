@@ -1,0 +1,75 @@
+name: aleteo_triqui
+description: Implementacion de ejemplo del ejercicio del triqui usando el arquetipo de Pragma.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  flutter_native_splash: ^2.2.16
+  flutter_launcher_icons: ^0.11.0
+  google_fonts: ^4.0.3
+  network_bound_resource: 1.0.0
+  cached_network_image: ^3.2.3
+
+# configuracion Splash screen
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_dark: "#28022b"
+
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#28022b"
+
+flutter_icons:
+  image_path: "assets/images/splash.jpg"
+  android: 'launcher_icon'
+  min_sdk_android: 21
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/images/splash.jpg"
+    background_color: "#FFFFFF"
+    theme_color: "#FFA500"
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+  test: ^1.5.1
+  mocktail: ^0.3.0
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
+    - fonts/
+
