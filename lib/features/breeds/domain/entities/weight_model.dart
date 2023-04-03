@@ -6,20 +6,20 @@ class Weight extends ModelEntity {
     required this.metric,
   });
 
+  factory Weight.fromJson(final Map<String, dynamic> json) => Weight(
+        imperial: json['imperial'],
+        metric: json['metric'],
+      );
+
   final String imperial;
   final String metric;
 
-  factory Weight.fromJson(Map<String, dynamic> json) => Weight(
-        imperial: json["imperial"],
-        metric: json["metric"],
-      );
-
   @override
-  Weight fromJson(Map<String, dynamic> source) => Weight.fromJson(source);
+  Weight fromJson(final Map<String, dynamic> source) => Weight.fromJson(source);
 
   @override
   Map<String, dynamic> toJson() => {
-        "imperial": imperial,
-        "metric": metric,
+        'imperial': imperial,
+        'metric': metric,
       };
 }

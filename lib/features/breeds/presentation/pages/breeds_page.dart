@@ -23,7 +23,8 @@ class _BreedsPageState extends State<BreedsPage> {
       BreedsBloc.name,
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async => _loadBreeds());
+    WidgetsBinding.instance
+        .addPostFrameCallback((final _) async => _loadBreeds());
     super.initState();
   }
 
@@ -45,19 +46,17 @@ class _BreedsPageState extends State<BreedsPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Catbreeds'),
       ),
       body: RefreshIndicator(
-        onRefresh: () {
-          return _loadBreeds();
-        },
+        onRefresh: _loadBreeds,
         child: StreamBuilder<BreedsStateModel>(
           stream: breedsBloc.stateStream,
-          builder: (context, snapshot) {
+          builder: (final context, final snapshot) {
             if (snapshot.data?.isLoading ?? true) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -67,7 +66,7 @@ class _BreedsPageState extends State<BreedsPage> {
             }
 
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: BreedsList(breeds: snapshot.data!.breeds),
             );
           },

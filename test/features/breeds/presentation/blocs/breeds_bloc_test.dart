@@ -35,25 +35,25 @@ void main() {
     test('Should return a list of breeds', () async {
       final breed = Breed(
         weight: Weight(
-          imperial: "7  -  10",
-          metric: "3 - 5",
+          imperial: '7  -  10',
+          metric: '3 - 5',
         ),
-        id: "abys",
-        name: "Abyssinian",
-        cfaUrl: "http://cfa.org/Breeds/BreedsAB/Abyssinian.aspx",
-        vetstreetUrl: "http://www.vetstreet.com/cats/abyssinian",
+        id: 'abys',
+        name: 'Abyssinian',
+        cfaUrl: 'http://cfa.org/Breeds/BreedsAB/Abyssinian.aspx',
+        vetstreetUrl: 'http://www.vetstreet.com/cats/abyssinian',
         vcahospitalsUrl:
-            "https//vcahospitals.com/know-your-pet/cat-breeds/abyssinian",
-        temperament: "Active, Energetic, Independent, Intelligent, Gentle",
-        origin: "Egypt",
-        countryCodes: "EG",
-        countryCode: "EG",
+            'https//vcahospitals.com/know-your-pet/cat-breeds/abyssinian',
+        temperament: 'Active, Energetic, Independent, Intelligent, Gentle',
+        origin: 'Egypt',
+        countryCodes: 'EG',
+        countryCode: 'EG',
         description:
-            "TheAbyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
-        lifeSpan: "14 - 15",
+            'TheAbyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.',
+        lifeSpan: '14 - 15',
         indoor: 0,
         lap: 1,
-        altNames: "",
+        altNames: '',
         adaptability: 5,
         affectionLevel: 5,
         childFriendly: 3,
@@ -73,9 +73,9 @@ void main() {
         rex: 0,
         suppressedTail: 0,
         shortLegs: 0,
-        wikipediaUrl: "https://en.wikipedia.org/wiki/Abyssinian_(cat)",
+        wikipediaUrl: 'https://en.wikipedia.org/wiki/Abyssinian_(cat)',
         hypoallergenic: 0,
-        referenceImageId: "0XYvRd7oD",
+        referenceImageId: '0XYvRd7oD',
         catFriendly: null,
         bidability: null,
       );
@@ -83,7 +83,7 @@ void main() {
       when(
             () => getBreedsUseCase(null),
       ).thenAnswer(
-        (_) async => [breed],
+            (final _) async => [breed],
       );
 
       await breedsBloc.getBreeds();
@@ -113,15 +113,16 @@ void main() {
   group('getBreedImage', () {
     test('Should return a BreedImage', () async {
       final breedImage = BreedImage(
-          id: "0XYvRd7oD",
-          url: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg",
-          width: 1204,
-          height: 1445);
+        id: '0XYvRd7oD',
+        url: 'https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg',
+        width: 1204,
+        height: 1445,
+      );
 
       when(
-            () => getBreedImageUseCase(any()),
+        () => getBreedImageUseCase(any()),
       ).thenAnswer(
-        (_) async => breedImage,
+        (final _) async => breedImage,
       );
 
       final response = await breedsBloc.getBreedImage('referencedImageId');

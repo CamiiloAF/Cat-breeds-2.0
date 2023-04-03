@@ -1,14 +1,13 @@
 import 'dart:async';
 
-import 'package:aleteo_triqui/features/breeds/data/repositories/breeds_repository.dart';
-import 'package:aleteo_triqui/features/breeds/domain/use_cases/get_breed_image_use_case.dart';
-import 'package:aleteo_triqui/features/breeds/domain/use_cases/get_breeds_use_case.dart';
-
 import 'core/blocs/navigator_bloc.dart';
 import 'core/blocs/onboarding_bloc.dart';
 import 'core/entities/entity_bloc.dart';
 import 'core/http/config/remote_api_constants.dart';
 import 'core/http/http_proxy_impl.dart';
+import 'features/breeds/data/repositories/breeds_repository.dart';
+import 'features/breeds/domain/use_cases/get_breed_image_use_case.dart';
+import 'features/breeds/domain/use_cases/get_breeds_use_case.dart';
 import 'features/breeds/presentation/blocs/breeds_bloc.dart';
 import 'features/splash/presentation/splash_page.dart';
 import 'shared/navigation/my_app_navigator_provider.dart';
@@ -23,8 +22,8 @@ FutureOr<void> testMe() async {
   );
 }
 
-void onboarding([
-  Duration initialDelay = const Duration(seconds: 2),
+Future<void> onboarding([
+  final Duration inaitialDelay = const Duration(seconds: 2),
 ]) async {
   /// Register modules to use
   /// Inicializamos el responsive y la ux del usuario

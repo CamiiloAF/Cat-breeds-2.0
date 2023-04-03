@@ -1,7 +1,7 @@
 abstract class Either<L, R> {
   T when<T>(
-    T Function(L) left,
-    T Function(R) right,
+    final T Function(L) left,
+    final T Function(R) right,
   ) {
     if (this is Left) {
       return left((this as Left).value);
@@ -11,11 +11,13 @@ abstract class Either<L, R> {
 }
 
 class Left<L, R> extends Either<L, R> {
-  final L value;
   Left(this.value);
+
+  final L value;
 }
 
 class Right<L, R> extends Either<L, R> {
-  final R value;
   Right(this.value);
+
+  final R value;
 }

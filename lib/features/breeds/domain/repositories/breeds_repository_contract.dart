@@ -4,5 +4,5 @@ import '../entities/breed_model.dart';
 abstract class BreedsRepositoryContract {
   Future<List<Breed>> getBreeds();
 
-  Future<BreedImage> getBreedImage(String referencedImageId);
+  Future<BreedImage> getBreedImage(final String referencedImageId);
 }

@@ -7,12 +7,15 @@ import '../widgets/breed_cache_image.dart';
 import '../widgets/breed_image_placeholder.dart';
 
 class BreedDetailPage extends StatelessWidget {
-  const BreedDetailPage({Key? key, required this.breed}) : super(key: key);
+  const BreedDetailPage({
+    required this.breed,
+    final Key? key,
+  }) : super(key: key);
 
   final Breed breed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
     final textTheme = Theme.of(context).textTheme;
@@ -42,7 +45,7 @@ class BreedDetailPage extends StatelessWidget {
             child: Scrollbar(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 12.0,
+                  horizontal: 12,
                   vertical: 8,
                 ),
                 child: ListView(
@@ -67,19 +70,23 @@ class BreedDetailPage extends StatelessWidget {
 
   SizedBox _buildSeparator() => const SizedBox(height: 16);
 
-  Widget _buildTextSpan(String title, String text) {
-    return Builder(builder: (context) {
-      final textTheme = Theme.of(context).textTheme;
+  Widget _buildTextSpan(final String title, final String text) {
+    return Builder(
+      builder: (final context) {
+        final textTheme = Theme.of(context).textTheme;
 
-      return RichText(
-        text: TextSpan(children: [
-          TextSpan(
-            text: '$title: ',
-            style: textTheme.titleMedium!.copyWith(color: Colors.black),
+        return RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '$title: ',
+                style: textTheme.titleMedium!.copyWith(color: Colors.black),
+              ),
+              TextSpan(text: text, style: textTheme.titleMedium)
+            ],
           ),
-          TextSpan(text: text, style: textTheme.titleMedium!)
-        ]),
-      );
-    });
+        );
+      },
+    );
   }
 }

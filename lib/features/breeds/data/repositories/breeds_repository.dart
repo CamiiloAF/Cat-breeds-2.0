@@ -6,17 +6,17 @@ import '../../domain/entities/breed_model.dart';
 import '../../domain/repositories/breeds_repository_contract.dart';
 
 class BreedsRepository implements BreedsRepositoryContract {
-  final NetworkBoundResource _httpClient;
-  final String _breedsPath;
-  final String _breedImagesPath;
 
   BreedsRepository({
-    required NetworkBoundResource httpClient,
-    required String breedsPath,
-    required String breedImagesPath,
+    required final NetworkBoundResource httpClient,
+    required final String breedsPath,
+    required final String breedImagesPath,
   })  : _httpClient = httpClient,
         _breedsPath = breedsPath,
         _breedImagesPath = breedImagesPath;
+  final NetworkBoundResource _httpClient;
+  final String _breedsPath;
+  final String _breedImagesPath;
 
   @override
   Future<List<Breed>> getBreeds() async {
@@ -35,7 +35,7 @@ class BreedsRepository implements BreedsRepositoryContract {
   }
 
   @override
-  Future<BreedImage> getBreedImage(String referencedImageId) async {
+  Future<BreedImage> getBreedImage(final String referencedImageId) async {
     try {
       final response = await _httpClient.executeGet(
         path: '$_breedImagesPath/$referencedImageId',

@@ -1,16 +1,15 @@
-import 'package:aleteo_triqui/shared/theme/theme_config.dart';
 import 'package:flutter/material.dart';
 
 import 'shared/navigation/my_app_navigator_provider.dart';
+import 'shared/theme/theme_config.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    MyAppRouterDelegate routerDelegate = MyAppRouterDelegate();
-    MyAppRouteInformationParser routeInformationParser =
-        MyAppRouteInformationParser();
+  Widget build(final BuildContext context) {
+    final routerDelegate = MyAppRouterDelegate();
+    final routeInformationParser = MyAppRouteInformationParser();
 
     return MaterialApp.router(
       title: 'Cat breeds',

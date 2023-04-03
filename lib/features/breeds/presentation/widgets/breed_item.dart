@@ -10,12 +10,15 @@ import 'breed_cache_image.dart';
 import 'breed_image_placeholder.dart';
 
 class BreedItem extends StatelessWidget {
-  const BreedItem({Key? key, required this.breed}) : super(key: key);
+  const BreedItem({
+    required this.breed,
+    final Key? key,
+  }) : super(key: key);
 
   final Breed breed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
@@ -25,7 +28,7 @@ class BreedItem extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
-          side: const BorderSide(color: Colors.black38, width: 1),
+          side: const BorderSide(color: Colors.black38),
         ),
         child: Column(
           children: [
@@ -38,9 +41,9 @@ class BreedItem extends StatelessWidget {
     );
   }
 
-  Container _buildFooter(TextTheme textTheme) {
+  Container _buildFooter(final TextTheme textTheme) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -57,7 +60,7 @@ class BreedItem extends StatelessWidget {
     );
   }
 
-  SizedBox _buildBreedImage(Size screenSize) {
+  SizedBox _buildBreedImage(final Size screenSize) {
     final breedsBloc = blocCore.getBlocModule<BreedsBloc>(
       BreedsBloc.name,
     );
@@ -71,7 +74,7 @@ class BreedItem extends StatelessWidget {
               cacheKey: breed.id + breed.name,
             )
           : Builder(
-              builder: (context) {
+        builder: (final context) {
                 if (breed.referenceImageId == null) {
                   return const BreedImagePlaceholder();
                 }
@@ -80,7 +83,7 @@ class BreedItem extends StatelessWidget {
                   future: breedsBloc.getBreedImage(
                     breed.referenceImageId!,
                   ),
-                  builder: (context, snapshot) {
+                  builder: (final context, final snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -106,15 +109,15 @@ class BreedItem extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(TextTheme textTheme, ThemeData theme) {
+  Widget _buildHeader(final TextTheme textTheme, final ThemeData theme) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             breed.name,
-            style: textTheme.titleLarge!,
+            style: textTheme.titleLarge,
           ),
           TextButton(
             onPressed: _navigateToDetail,

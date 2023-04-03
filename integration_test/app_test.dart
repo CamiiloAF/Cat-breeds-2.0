@@ -11,40 +11,42 @@ void main() {
 
   group('end-to-end test', () {
     testWidgets('tap on breed item, verify navigate to detail page',
-        (tester) async {
-          app.main();
-          await tester.pumpAndSettle();
+        (final tester) async {
+      app.main();
+      await tester.pumpAndSettle();
 
-          final Finder breedItem = find.byType(BreedItem).first;
-          await tester.tap(breedItem);
+      final breedItem = find.byType(BreedItem).first;
+      await tester.tap(breedItem);
 
-          await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-          expect(find.byType(BreedDetailPage), findsOneWidget);
+      expect(find.byType(BreedDetailPage), findsOneWidget);
 
-          final Finder detailPageBackButtonItem =
+      final detailPageBackButtonItem =
           find.widgetWithIcon(GestureDetector, Icons.arrow_back);
-          await tester.tap(detailPageBackButtonItem);
+      await tester.tap(detailPageBackButtonItem);
 
-          await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
           expect(find.byType(BreedDetailPage), findsNothing);
         });
 
     testWidgets('tap on "Más..." button, verify navigate to detail page',
-            (tester) async {
+            (final tester) async {
           app.main();
           await tester.pumpAndSettle();
 
-          final Finder breedItemTextButton =
-              find.widgetWithText(TextButton, 'Más...').first;
+          final breedItemTextButton =
+              find
+                  .widgetWithText(TextButton, 'Más...')
+                  .first;
           await tester.tap(breedItemTextButton);
 
           await tester.pumpAndSettle();
 
           expect(find.byType(BreedDetailPage), findsOneWidget);
 
-          final Finder detailPageBackButtonItem =
+          final detailPageBackButtonItem =
           find.widgetWithIcon(GestureDetector, Icons.arrow_back);
           await tester.tap(detailPageBackButtonItem);
 
@@ -53,11 +55,11 @@ void main() {
           expect(find.byType(BreedDetailPage), findsNothing);
         });
 
-    testWidgets('search breeds, verify found nothing', (tester) async {
+    testWidgets('search breeds, verify found nothing', (final tester) async {
       app.main();
       await tester.pumpAndSettle();
 
-      final Finder breedItemTextButton = find.byType(BreedSearchInput);
+      final breedItemTextButton = find.byType(BreedSearchInput);
       await tester.enterText(breedItemTextButton, 'Nothing to found');
 
       await tester.pumpAndSettle();
@@ -65,23 +67,27 @@ void main() {
       expect(find.text('No hemos encontrado resultados'), findsOneWidget);
     });
 
-    testWidgets('search breeds, verify filter breeds', (tester) async {
+    testWidgets('search breeds, verify filter breeds', (final tester) async {
       app.main();
       await tester.pumpAndSettle();
 
-      final Finder allBreedItems = find.byType(BreedItem);
-      final int allBreedItemsCount = allBreedItems.evaluate().length;
+      final allBreedItems = find.byType(BreedItem);
+      final allBreedItemsCount = allBreedItems
+          .evaluate()
+          .length;
 
-      final Finder breedItemTextButton = find.byType(BreedSearchInput);
+      final breedItemTextButton = find.byType(BreedSearchInput);
       await tester.enterText(breedItemTextButton, 'Abys');
 
       await tester.pumpAndSettle();
 
-      final Finder filteredBreedItems = find.byType(BreedItem);
+      final filteredBreedItems = find.byType(BreedItem);
 
       expect(
         allBreedItemsCount,
-        greaterThan(filteredBreedItems.evaluate().length),
+        greaterThan(filteredBreedItems
+            .evaluate()
+            .length),
       );
     });
   });

@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 Future<RequestOptions> customOnRequest(
-  RequestOptions options,
+  final RequestOptions options,
 ) async {
   options.headers.addAll({
     'x-api-key':
@@ -15,9 +15,11 @@ Future<RequestOptions> customOnRequest(
   return options;
 }
 
-void _printInfoRequest(RequestOptions options) {
+void _printInfoRequest(final RequestOptions options) {
   log('baseURL: ${options.baseUrl}\npath: ${options.path}');
   log('headers: ${options.headers}');
   log('queryParameters: ${options.queryParameters}');
-  if (options.data is! FormData) log('data : ${jsonEncode(options.data)}');
+  if (options.data is! FormData) {
+    log('data : ${jsonEncode(options.data)}');
+  }
 }

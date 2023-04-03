@@ -6,7 +6,7 @@ import '../../../core/blocs/navigator_bloc.dart';
 import '../../breeds/presentation/pages/breeds_page.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({final Key? key}) : super(key: key);
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -25,7 +25,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _navigateToMainPage());
+    WidgetsBinding.instance
+        .addPostFrameCallback((final _) => _navigateToMainPage());
 
     blocCore.addBlocModule(
       UserNotificationsBloc.name,
@@ -70,14 +71,13 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(.96),
       body: FadeTransition(
         opacity: _animation,
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Center(

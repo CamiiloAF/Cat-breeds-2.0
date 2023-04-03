@@ -8,7 +8,7 @@ class GetBreedImageUseCase implements UseCase<Future<BreedImage>, String> {
   final BreedsRepositoryContract _repository;
 
   @override
-  Future<BreedImage> call(String referencedImageId) async {
+  Future<BreedImage> call(final String referencedImageId) async {
     return _repository.getBreedImage(referencedImageId);
   }
 }

@@ -30,8 +30,8 @@ void main() {
   group('StreamBuilder states', () {
     testWidgets(
         'BreedsPage has a CircularProgressIndicator when data is loading',
-        (tester) async {
-          when(() => getBreedsUseCase(null)).thenAnswer((_) async => []);
+        (final tester) async {
+      when(() => getBreedsUseCase(null)).thenAnswer((final _) async => []);
 
       await tester.pumpWidget(
         const MaterialApp(
@@ -47,8 +47,8 @@ void main() {
     });
 
     testWidgets('BreedsPage has a BreedsList when data is loaded',
-        (tester) async {
-          when(() => getBreedsUseCase(null)).thenAnswer((_) async => []);
+        (final tester) async {
+      when(() => getBreedsUseCase(null)).thenAnswer((final _) async => []);
 
       await tester.pumpWidget(
         const MaterialApp(
@@ -64,20 +64,22 @@ void main() {
     });
 
     testWidgets('BreedsPage has a SnackBar when data could not be loaded',
-        (tester) async {
-          const errorMessage = 'Could not load data';
+            (final tester) async {
+      const errorMessage = 'Could not load data';
       when(() => getBreedsUseCase(null)).thenThrow(Failure(errorMessage));
 
       await tester.pumpWidget(
         MaterialApp(
-          home: Builder(builder: (context) {
-            blocCore.addBlocModule(
-              UserNotificationsBloc.name,
-              UserNotificationsBloc(context),
-            );
+          home: Builder(
+            builder: (final context) {
+              blocCore.addBlocModule(
+                UserNotificationsBloc.name,
+                UserNotificationsBloc(context),
+              );
 
-            return const BreedsPage();
-          }),
+              return const BreedsPage();
+            },
+          ),
         ),
       );
 

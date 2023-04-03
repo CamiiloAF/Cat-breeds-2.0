@@ -1,10 +1,6 @@
 import 'breed_model.dart';
 
 class BreedsStateModel {
-  final List<Breed> allBreads;
-  final List<Breed> breeds;
-  final bool isLoading;
-  final bool hasError;
 
   const BreedsStateModel({
     required this.allBreads,
@@ -14,17 +10,22 @@ class BreedsStateModel {
   });
 
   const BreedsStateModel.empty({
-     this.allBreads = const [],
-     this.breeds = const [],
-     this.isLoading = false,
-     this.hasError = false,
+    this.allBreads = const [],
+    this.breeds = const [],
+    this.isLoading = false,
+    this.hasError = false,
   });
 
+  final List<Breed> allBreads;
+  final List<Breed> breeds;
+  final bool isLoading;
+  final bool hasError;
+
   BreedsStateModel copyWith({
-    List<Breed>? allBreads,
-    List<Breed>? breeds,
-    bool? isLoading,
-    bool? hasError,
+    final List<Breed>? allBreads,
+    final List<Breed>? breeds,
+    final bool? isLoading,
+    final bool? hasError,
   }) {
     return BreedsStateModel(
       allBreads: allBreads ?? this.allBreads,

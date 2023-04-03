@@ -8,7 +8,7 @@ class GetBreedsUseCase implements UseCase<Future<List<Breed>>, void> {
   final BreedsRepositoryContract _repository;
 
   @override
-  Future<List<Breed>> call(_) async {
+  Future<List<Breed>> call(final _) async {
     return _repository.getBreeds();
   }
 }

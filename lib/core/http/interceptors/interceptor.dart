@@ -11,15 +11,19 @@ class AppInterceptors extends Interceptor {
 
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    final RequestOptions options,
+    final RequestInterceptorHandler handler,
+  ) async {
     final reqOptions = await customOnRequest(options);
     handler.next(reqOptions);
   }
 
   @override
   Future<dynamic> onResponse(
-      Response response, ResponseInterceptorHandler handler) async {
+    final Response response,
+    final ResponseInterceptorHandler handler,
+  ) async {
     log(response.toString());
-      handler.next(response);
+    handler.next(response);
   }
 }

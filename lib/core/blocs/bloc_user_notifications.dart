@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import '../../core/entities/entity_bloc.dart';
 
 class UserNotificationsBloc extends BlocModule {
-  static const name = 'userNotificationsBloc';
-  final BlocGeneral _userNotificationsBloc = BlocGeneral<String>('');
-  UserNotificationsBloc(BuildContext context) {
+  UserNotificationsBloc(final BuildContext context) {
     _context = context;
   }
+
+  static const name = 'userNotificationsBloc';
+  final BlocGeneral _userNotificationsBloc = BlocGeneral<String>('');
 
   late BuildContext _context;
 
-  void setContext(BuildContext context) {
+  set context(final BuildContext context) {
     _context = context;
   }
 
-  void showGeneralAlert(String msg) {
+  void showGeneralAlert(final String msg) {
     try {
       showAlert(_context, Text(msg));
     } catch (e) {
@@ -26,7 +27,7 @@ class UserNotificationsBloc extends BlocModule {
   }
 
   void showGeneralSsnackBar(
-    String msg,
+    final String msg,
   ) {
     try {
       final snackBar = SnackBar(
@@ -38,16 +39,17 @@ class UserNotificationsBloc extends BlocModule {
     }
   }
 
-  void showSnackBar(BuildContext context, SnackBar snackBar) {
+  void showSnackBar(final BuildContext context, final SnackBar snackBar) {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void showAlert(BuildContext context, Widget widget) {
+  void showAlert(final BuildContext context, final Widget widget) {
     showDialog(
-        context: _context,
-        builder: (context) => AlertDialog(
-              content: widget,
-            ));
+      context: _context,
+      builder: (final context) => AlertDialog(
+        content: widget,
+      ),
+    );
   }
 
   @override

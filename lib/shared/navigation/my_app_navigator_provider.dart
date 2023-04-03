@@ -1,24 +1,27 @@
+// ignore_for_file: prefer_mixin
+
 import 'dart:async';
 
-import 'package:aleteo_triqui/features/breeds/presentation/pages/breeds_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../features/breeds/presentation/pages/breeds_page.dart';
+
 class MyAppRouterDelegate extends RouterDelegate<PageManager>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageManager> {
-  @override
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
   MyAppRouterDelegate() {
     myPageManager.addListener(notifyListeners);
   }
 
   @override
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
   PageManager? get currentConfiguration => myPageManager.currentConfiguration;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Navigator(
       key: navigatorKey,
       pages: myPageManager.pages,
@@ -28,7 +31,7 @@ class MyAppRouterDelegate extends RouterDelegate<PageManager>
   }
 
   @override
-  Future<void> setNewRoutePath(PageManager configuration) async {
+  Future<void> setNewRoutePath(final PageManager configuration) async {
     configuration.update();
   }
 
@@ -42,13 +45,16 @@ class MyAppRouterDelegate extends RouterDelegate<PageManager>
 
 class MyAppRouteInformationParser extends RouteInformationParser<PageManager> {
   @override
-  Future<PageManager> parseRouteInformation(RouteInformation routeInformation) {
+  Future<PageManager> parseRouteInformation(
+    final RouteInformation routeInformation,
+  ) {
     return Future.value(
-        PageManager.fromRouteInformation(routeInformation, myPageManager));
+      PageManager.fromRouteInformation(routeInformation, myPageManager),
+    );
   }
 
   @override
-  RouteInformation? restoreRouteInformation(PageManager configuration) {
+  RouteInformation? restoreRouteInformation(final PageManager configuration) {
     return configuration.getCurrentUrl();
   }
 }
@@ -56,6 +62,30 @@ class MyAppRouteInformationParser extends RouteInformationParser<PageManager> {
 const String _k404Name = '/404';
 
 class PageManager extends ChangeNotifier {
+  PageManager([this.routeInformation]) {
+    setHomePage(onBoardingPage);
+    set404Page(page404Widget);
+  }
+
+  PageManager.fromRouteInformation(
+    this.routeInformation,
+    final PageManager currentPageManager,
+  ) {
+    setHomePage(currentPageManager.onBoardingPage);
+    set404Page(currentPageManager.page404Widget);
+    _pages.clear();
+    _pages.addAll(currentPageManager.getAllPages);
+    if (routeInformation != null) {
+      final uri = Uri.parse(routeInformation?.location ?? '');
+      final page = currentPageManager.getPageFromDirectory(
+        uri.path,
+        arguments: uri.queryParametersAll,
+      );
+      currentPageManager.push('/', onBoardingPage);
+      currentPageManager.pushFromRoutesettings(uri.path, page);
+    }
+  }
+
   // Este page manager deberia ser unico en la aplicacion ???
   Widget page404Widget = const Page404Widget();
   Widget onBoardingPage = const BreedsPage();
@@ -64,12 +94,12 @@ class PageManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removePageFromRoute(String route) {
+  void removePageFromRoute(final String route) {
     _removePageFromRoute(route);
     notifyListeners();
   }
 
-  void _removePageFromRoute(String route) {
+  void _removePageFromRoute(final String route) {
     if (route == '/') {
       return;
     }
@@ -83,35 +113,16 @@ class PageManager extends ChangeNotifier {
     _pages.addAll(tmpPages);
   }
 
-  PageManager([this.routeInformation]) {
-    setHomePage(onBoardingPage, null);
-    set404Page(page404Widget, null);
-  }
-
-  PageManager.fromRouteInformation(
-      this.routeInformation, PageManager currentPageManager) {
-    setHomePage(currentPageManager.onBoardingPage);
-    set404Page(currentPageManager.page404Widget);
-    _pages.clear();
-    _pages.addAll(currentPageManager.getAllPages);
-    if (routeInformation != null) {
-      final uri = Uri.parse(routeInformation?.location ?? '');
-      MaterialPage page = currentPageManager.getPageFromDirectory(uri.path,
-          arguments: uri.queryParametersAll);
-      currentPageManager.push('/', onBoardingPage);
-      currentPageManager.pushFromRoutesettings(uri.path, page);
-    }
-  }
-
-  void setPageTitle(String title, [int? color]) {
+  void setPageTitle(final String title, [final int? color]) {
     if (kIsWeb) {
-      title = title.replaceAll('/', ' ').trim();
+      final finalTitle = title.replaceAll('/', ' ').trim();
       try {
         SystemChrome.setApplicationSwitcherDescription(
-            ApplicationSwitcherDescription(
-          label: title,
-          primaryColor: color, // This line is required
-        ));
+          ApplicationSwitcherDescription(
+            label: finalTitle,
+            primaryColor: color, // This line is required
+          ),
+        );
       } catch (e) {
         debugPrint('$e');
       }
@@ -126,14 +137,17 @@ class PageManager extends ChangeNotifier {
 
   List<String> get directoryOfPages => _directoryPagesMap.keys.toList();
 
-  void registerPageToDirectory(
-      {required String routeName, required Widget widget, Object? arguments}) {
+  void registerPageToDirectory({
+    required String routeName,
+    required final Widget widget,
+    final Object? arguments,
+  }) {
     routeName = validateRouteName(routeName);
     _directoryPagesMap[routeName] =
         MaterialPage(name: routeName, child: widget, arguments: arguments);
   }
 
-  void removePageFromDirectory(String routeName) {
+  void removePageFromDirectory(final String routeName) {
     _directoryPagesMap.remove(routeName);
     notifyListeners();
   }
@@ -142,7 +156,7 @@ class PageManager extends ChangeNotifier {
     if (_pages.length > 1) {
       if (_pages.length > 1) {
         final tmpPages = <MaterialPage>[_pages[0]];
-        for (int i = 1; i < _pages.length; i++) {
+        for (var i = 1; i < _pages.length; i++) {
           final value = _pages[i];
           if (value.name != '/') {
             tmpPages.add(value);
@@ -154,65 +168,89 @@ class PageManager extends ChangeNotifier {
     }
   }
 
-  void setHomePage(Widget widget, [Object? arguments]) {
+  void setHomePage(final Widget widget, [final Object? arguments]) {
     /// This acts like the base of the navigator the main idea is first set the starting functions,
     _directoryPagesMap['/'] = MaterialPage(
-        name: '/', key: UniqueKey(), child: widget, arguments: arguments);
+      name: '/',
+      key: UniqueKey(),
+      child: widget,
+      arguments: arguments,
+    );
     _cleanDuplicateHomePages();
     onBoardingPage = widget;
   }
 
-  void set404Page(Widget widget, [Object? arguments]) {
+  void set404Page(final Widget widget, [final Object? arguments]) {
     _directoryPagesMap[_k404Name] = MaterialPage(
-        name: _k404Name, key: UniqueKey(), child: widget, arguments: arguments);
+      name: _k404Name,
+      key: UniqueKey(),
+      child: widget,
+      arguments: arguments,
+    );
     page404Widget = widget;
   }
 
-  final _pages = <MaterialPage>[
-  ];
+  final _pages = <MaterialPage>[];
 
   PageManager get currentConfiguration => this;
 
-  bool isThisRouteNameInDirectory(String routeName) {
+  bool isThisRouteNameInDirectory(final String routeName) {
     return _directoryPagesMap.containsKey(validateRouteName(routeName));
   }
 
-  String validateRouteName(String routeName) {
+  String validateRouteName(final String routeName) {
     if (routeName.isEmpty || routeName[0] != '/') {
-      routeName = '/$routeName';
+      return '/$routeName';
     }
     return routeName;
   }
 
-  void push(String routeName, Widget widget, [Object? arguments]) {
-    routeName = validateRouteName(routeName);
+  void push(
+    final String routeName,
+    final Widget widget, [
+    final Object? arguments,
+  ]) {
+    final finalRouteName = validateRouteName(routeName);
     final page = MaterialPage(
-        name: routeName, key: UniqueKey(), child: widget, arguments: arguments);
-    _directoryPagesMap[routeName] = page;
+      name: finalRouteName,
+      key: UniqueKey(),
+      child: widget,
+      arguments: arguments,
+    );
+    _directoryPagesMap[finalRouteName] = page;
     _pages.remove(page);
     _pages.add(page);
     pageController.sink.add(_pages.length);
     notifyListeners();
   }
 
-  void pushAndReplacement(String routeName, Widget widget,
-      [Object? arguments]) {
+  void pushAndReplacement(
+    final String routeName,
+    final Widget widget, [
+    final Object? arguments,
+  ]) {
     back();
     push(routeName, widget, arguments);
   }
 
-  void pushNamed(String routeName, [Object? arguments]) {
-    Widget widget = getPageFromDirectory(routeName).child;
+  void pushNamed(final String routeName, [final Object? arguments]) {
+    final widget = getPageFromDirectory(routeName).child;
     push(routeName, widget, arguments);
   }
 
-  void pushNamedAndReplacement(String routeName, [Object? arguments]) {
+  void pushNamedAndReplacement(
+    final String routeName, [
+    final Object? arguments,
+  ]) {
     back();
-    Widget widget = getPageFromDirectory(routeName).child;
+    final widget = getPageFromDirectory(routeName).child;
     push(routeName, widget, arguments);
   }
 
-  void pushFromRoutesettings(String routeName, MaterialPage routeSettings) {
+  void pushFromRoutesettings(
+    final String routeName,
+    final MaterialPage routeSettings,
+  ) {
     if (validateRouteName(routeName).length > 1) {
       _pages.remove(routeSettings);
       _pages.add(routeSettings);
@@ -239,52 +277,58 @@ class PageManager extends ChangeNotifier {
     }
   }
 
-  bool didPop(route, result) {
+  bool didPop(final _, final __) {
     back();
     return true;
   }
 
   @override
-  dispose() {
+  void dispose() {
     pageController.close();
     super.dispose();
   }
 
-  MaterialPage getPageFromDirectory(String routeName, {Object? arguments}) {
-    MaterialPage page = get404PageFromDirectory(arguments);
+  MaterialPage getPageFromDirectory(
+    final String routeName, {
+    final Object? arguments,
+  }) {
+    var page = get404PageFromDirectory(arguments);
     if (isThisRouteNameInDirectory(routeName)) {
       page = _directoryPagesMap[routeName]!;
       page = MaterialPage(
-          name: routeName,
-          key: page.key,
-          arguments: arguments,
-          child: page.child);
+        name: routeName,
+        key: page.key,
+        arguments: arguments,
+        child: page.child,
+      );
     }
     return page;
   }
 
-  MaterialPage get404PageFromDirectory([Object? arguments]) {
+  MaterialPage get404PageFromDirectory([final Object? arguments]) {
     if (!_directoryPagesMap.containsKey(_k404Name)) {
       set404Page(const Page404Widget(), arguments);
     }
-    MaterialPage page = _directoryPagesMap[_k404Name]!;
-    page = MaterialPage(
-        child: page.child,
-        arguments: arguments,
-        key: page.key,
-        name: page.name);
-    return page;
+    final page = _directoryPagesMap[_k404Name]!;
+
+    return MaterialPage(
+      child: page.child,
+      arguments: arguments,
+      key: page.key,
+      name: page.name,
+    );
   }
 
-  void goTo404Page([Object? arguments]) {
+  void goTo404Page([final Object? arguments]) {
     pushFromRoutesettings(_k404Name, get404PageFromDirectory(arguments));
   }
 
   RouteInformation? getCurrentUrl() {
     final uri = Uri(
-        path: currentPage.name,
-        queryParameters: currentPage.arguments as Map<String, dynamic>?);
-    String location = uri.path;
+      path: currentPage.name,
+      queryParameters: currentPage.arguments as Map<String, dynamic>?,
+    );
+    var location = uri.path;
     if (uri.query.isNotEmpty) {
       location = '$location?${uri.query}';
     }
@@ -303,27 +347,29 @@ class PageManager extends ChangeNotifier {
 
 final myPageManager = PageManager();
 
-debugPrint(dynamic msg) {
+void debugPrint(final Object msg) {
   if (kDebugMode) {
-    print(msg.toString());
+    print(msg);
   }
 }
 
 class Page404Widget extends StatelessWidget {
-  const Page404Widget({Key? key, this.currentPageManager}) : super(key: key);
+  const Page404Widget({final Key? key, this.currentPageManager})
+      : super(key: key);
 
   final PageManager? currentPageManager;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Error 404'),
-          leading: myPageManager.historyPagesCount > 1
-              ? BackButton(
-                  onPressed: myPageManager.back,
-                )
-              : null),
+        title: const Text('Error 404'),
+        leading: myPageManager.historyPagesCount > 1
+            ? BackButton(
+                onPressed: myPageManager.back,
+              )
+            : null,
+      ),
       body: Center(
         child:
             Text('Pagina No encontrada ${myPageManager.currentPage.arguments}'),

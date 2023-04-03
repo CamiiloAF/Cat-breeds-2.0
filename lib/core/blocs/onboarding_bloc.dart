@@ -3,26 +3,27 @@ import 'dart:async';
 import '../entities/entity_bloc.dart';
 
 class OnboardingBloc extends BlocModule {
-  static const name = 'onboardingBloc';
-  late List<FutureOr<void> Function()> _blocOnboardingList;
-  final BlocGeneral<String> _blocMsg = BlocGeneral('Inicializando');
   OnboardingBloc(
-    List<FutureOr<void> Function()> listOfOnboardingFunctions,
+    final List<FutureOr<void> Function()> listOfOnboardingFunctions,
   ) {
     _blocOnboardingList = listOfOnboardingFunctions;
   }
 
+  static const name = 'onboardingBloc';
+  late List<FutureOr<void> Function()> _blocOnboardingList;
+  final BlocGeneral<String> _blocMsg = BlocGeneral('Inicializando');
+
   Stream<String> get msgStream => _blocMsg.stream;
 
-  int addFunction(FutureOr<void> Function() function) {
+  int addFunction(final FutureOr<void> Function() function) {
     _blocOnboardingList.add(function);
     return _blocOnboardingList.length;
   }
 
-  Future<void> execute(Duration duration) async {
+  Future<void> execute(final Duration duration) async {
     await Future.delayed(duration);
-    List<FutureOr<void> Function()> tmpList = List.from(_blocOnboardingList);
-    int length = tmpList.length;
+    final tmpList = List<FutureOr<void> Function()>.from(_blocOnboardingList);
+    var length = tmpList.length;
     for (final f in tmpList) {
       length--;
       await f();

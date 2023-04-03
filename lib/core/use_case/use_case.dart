@@ -1,3 +1,3 @@
 abstract class UseCase<R, P> {
-  R call(P params);
+  R call(final P params);
 }

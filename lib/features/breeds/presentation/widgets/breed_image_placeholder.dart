@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BreedImagePlaceholder extends StatelessWidget {
-  const BreedImagePlaceholder({Key? key}) : super(key: key);
+  const BreedImagePlaceholder({final Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Image.asset(
       'assets/images/cat_placeholder.png',
       fit: BoxFit.fitHeight,

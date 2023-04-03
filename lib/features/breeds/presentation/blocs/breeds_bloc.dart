@@ -1,21 +1,19 @@
 import 'dart:async';
 
-import 'package:aleteo_triqui/features/breeds/domain/use_cases/get_breed_image_use_case.dart';
-import 'package:aleteo_triqui/features/breeds/domain/use_cases/get_breeds_use_case.dart';
-
 import '../../../../core/entities/entity_bloc.dart';
 import '../../../../core/exceptions/failure.dart';
 import '../../domain/entities/breed_image_model.dart';
 import '../../domain/entities/breeds_state_model.dart';
+import '../../domain/use_cases/get_breed_image_use_case.dart';
+import '../../domain/use_cases/get_breeds_use_case.dart';
 
 class BreedsBloc extends BlocModule {
-  static const name = 'breedsBloc';
-
   BreedsBloc({
-    required GetBreedsUseCase getBreedsUseCase,
-    required GetBreedImageUseCase getBreedImageUseCase,
+    required final GetBreedsUseCase getBreedsUseCase,
+    required final GetBreedImageUseCase getBreedImageUseCase,
   })  : _getBreedsUseCase = getBreedsUseCase,
         _getBreedImageUseCase = getBreedImageUseCase;
+  static const name = 'breedsBloc';
 
   final GetBreedsUseCase _getBreedsUseCase;
   final GetBreedImageUseCase _getBreedImageUseCase;
@@ -54,7 +52,7 @@ class BreedsBloc extends BlocModule {
     }
   }
 
-  Future<BreedImage> getBreedImage(String referencedImageId) async {
+  Future<BreedImage> getBreedImage(final String referencedImageId) async {
     try {
       return _getBreedImageUseCase(referencedImageId);
     } on Failure {
@@ -64,7 +62,7 @@ class BreedsBloc extends BlocModule {
     }
   }
 
-  void _changeLoadingState({required bool isLoading}) {
+  void _changeLoadingState({required final bool isLoading}) {
     _breedsBloc.value = _breedsBloc.value.copyWith(isLoading: isLoading);
   }
 
@@ -73,9 +71,10 @@ class BreedsBloc extends BlocModule {
     _breedsBloc.dispose();
   }
 
-  void filterBreeds(String value) {
+  void filterBreeds(final String value) {
     final filteredBreeds = _breedsBloc.value.allBreads
-        .where((bred) => bred.name.toLowerCase().contains(value.toLowerCase()))
+        .where((final bred) =>
+            bred.name.toLowerCase().contains(value.toLowerCase()))
         .toList();
 
     _breedsBloc.value = _breedsBloc.value.copyWith(
