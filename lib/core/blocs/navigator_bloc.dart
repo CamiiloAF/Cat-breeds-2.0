@@ -6,7 +6,6 @@ import '../../core/entities/entity_bloc.dart';
 import '../../shared/navigation/my_app_navigator_provider.dart';
 
 class NavigatorBloc extends BlocModule {
-
   NavigatorBloc(final PageManager pageManager, [final Widget? homePage]) {
     _pageManager = pageManager;
     if (homePage != null) {
@@ -36,8 +35,11 @@ class NavigatorBloc extends BlocModule {
     _pageManager.update();
   }
 
-  void pushPage(final String routeName, final Widget widget,
-      [final Object? arguments]) {
+  void pushPage(
+    final String routeName,
+    final Widget widget, [
+    final Object? arguments,
+  ]) {
     _pageManager.push(routeName, widget, arguments);
   }
 
@@ -49,13 +51,18 @@ class NavigatorBloc extends BlocModule {
     _pageManager.pushAndReplacement(routeName, widget, arguments);
   }
 
-  void pushNamedAndReplacement(final String routeName,
-      [final Object? arguments]) {
+  void pushNamedAndReplacement(
+    final String routeName, [
+    final Object? arguments,
+  ]) {
     _pageManager.pushNamedAndReplacement(routeName, arguments);
   }
 
   void pushPageWidthTitle(
-      final String title, final String routeName, final Widget widget) {
+    final String title,
+    final String routeName,
+    final Widget widget,
+  ) {
     _pageManager.setPageTitle(title);
     _pageManager.push(routeName, widget);
   }

@@ -28,32 +28,30 @@ void main() {
 
       await tester.pumpAndSettle();
 
-          expect(find.byType(BreedDetailPage), findsNothing);
-        });
+      expect(find.byType(BreedDetailPage), findsNothing);
+    });
 
     testWidgets('tap on "Más..." button, verify navigate to detail page',
-            (final tester) async {
-          app.main();
-          await tester.pumpAndSettle();
+        (final tester) async {
+      app.main();
+      await tester.pumpAndSettle();
 
-          final breedItemTextButton =
-              find
-                  .widgetWithText(TextButton, 'Más...')
-                  .first;
-          await tester.tap(breedItemTextButton);
+      final breedItemTextButton =
+          find.widgetWithText(TextButton, 'Más...').first;
+      await tester.tap(breedItemTextButton);
 
-          await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-          expect(find.byType(BreedDetailPage), findsOneWidget);
+      expect(find.byType(BreedDetailPage), findsOneWidget);
 
-          final detailPageBackButtonItem =
+      final detailPageBackButtonItem =
           find.widgetWithIcon(GestureDetector, Icons.arrow_back);
-          await tester.tap(detailPageBackButtonItem);
+      await tester.tap(detailPageBackButtonItem);
 
-          await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-          expect(find.byType(BreedDetailPage), findsNothing);
-        });
+      expect(find.byType(BreedDetailPage), findsNothing);
+    });
 
     testWidgets('search breeds, verify found nothing', (final tester) async {
       app.main();
@@ -72,9 +70,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final allBreedItems = find.byType(BreedItem);
-      final allBreedItemsCount = allBreedItems
-          .evaluate()
-          .length;
+      final allBreedItemsCount = allBreedItems.evaluate().length;
 
       final breedItemTextButton = find.byType(BreedSearchInput);
       await tester.enterText(breedItemTextButton, 'Abys');
@@ -85,9 +81,9 @@ void main() {
 
       expect(
         allBreedItemsCount,
-        greaterThan(filteredBreedItems
-            .evaluate()
-            .length),
+        greaterThan(
+          filteredBreedItems.evaluate().length,
+        ),
       );
     });
   });

@@ -73,8 +73,9 @@ class BreedsBloc extends BlocModule {
 
   void filterBreeds(final String value) {
     final filteredBreeds = _breedsBloc.value.allBreads
-        .where((final bred) =>
-            bred.name.toLowerCase().contains(value.toLowerCase()))
+        .where(
+          (final bred) => bred.name.toLowerCase().contains(value.toLowerCase()),
+        )
         .toList();
 
     _breedsBloc.value = _breedsBloc.value.copyWith(
