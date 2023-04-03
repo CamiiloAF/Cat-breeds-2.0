@@ -1,5 +1,5 @@
 # Cat breeds
-Implementación de app de gatitos el arquetipo de Flutter - Pragma.
+Implementación de app de gatitos con propuesta de clean architecture.
 
 ## Versión de Flutter
 Flutter 3.7.8 • channel stable • https://github.com/flutter/flutter.git
@@ -12,16 +12,14 @@ Tools • Dart 2.19.5 • DevTools 2.20.1
 flutter run
 ```
 
-## Estructura de paquetes
+## Estructura de archivos
+
     .
-    ├── blocs                   # Archivos que implementan la clase BlocModule
-    ├── core                    # Archivos necesarios para que nuestra app funcione correctamente (http, local_storage)
-    ├── entities                # Entidades de la app  
-    ├── exceptions              # Excepciones del proyecto
-    ├── modules                 # Contiene cada una de las funcionalidades de la app
+    ├── core                    # Archivos necesarios para que nuestra app funcione correctamente (http, local_storage, excepciones)
+    ├── features                # Contiene cada una de las funcionalidades de la app
     │   ├─ folder_name          # Nombre del módulo
-    │      ├── blocs            # Blocs de cada módulo
-    │      ├── models           # Clases de datos del módulo
-    │      ├── ui               # Contiene todos los elementos de la UI del módulo
+    │      ├── domain           # Contiene los archivos necesarios para la lógica de negocio, como casos de uso y entidades
+    │      ├── data             # Contiene los archivos de la capa de datos, como repositories y data_sources
+    │      ├── presentation     # Contiene todos los elementos de la UI del feature
     ├── providers               # Archivos necesarios para la implementación de patrones de manejo de estado alternativos a los BLoC
-    └── services                # Archivos necesarios para la comunicación con servicios externos
+    └── shared                  # Contiene los elementos compartidos entre UI, como lo son el theme y el route handler

@@ -1,7 +1,7 @@
+import 'package:aleteo_triqui/features/breeds/presentation/pages/breed_detail_page.dart';
+import 'package:aleteo_triqui/features/breeds/presentation/widgets/breed_item.dart';
+import 'package:aleteo_triqui/features/breeds/presentation/widgets/breed_search_input.dart';
 import 'package:aleteo_triqui/main.dart' as app;
-import 'package:aleteo_triqui/modules/breeds/ui/pages/breed_detail_page.dart';
-import 'package:aleteo_triqui/modules/breeds/ui/widgets/breed_item.dart';
-import 'package:aleteo_triqui/modules/breeds/ui/widgets/breed_search_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -12,46 +12,46 @@ void main() {
   group('end-to-end test', () {
     testWidgets('tap on breed item, verify navigate to detail page',
         (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+          app.main();
+          await tester.pumpAndSettle();
 
-      final Finder breedItem = find.byType(BreedItem).first;
-      await tester.tap(breedItem);
+          final Finder breedItem = find.byType(BreedItem).first;
+          await tester.tap(breedItem);
 
-      await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
 
-      expect(find.byType(BreedDetailPage), findsOneWidget);
+          expect(find.byType(BreedDetailPage), findsOneWidget);
 
-      final Finder detailPageBackButtonItem =
+          final Finder detailPageBackButtonItem =
           find.widgetWithIcon(GestureDetector, Icons.arrow_back);
-      await tester.tap(detailPageBackButtonItem);
+          await tester.tap(detailPageBackButtonItem);
 
-      await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
 
-      expect(find.byType(BreedDetailPage), findsNothing);
-    });
+          expect(find.byType(BreedDetailPage), findsNothing);
+        });
 
     testWidgets('tap on "Más..." button, verify navigate to detail page',
-        (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+            (tester) async {
+          app.main();
+          await tester.pumpAndSettle();
 
-      final Finder breedItemTextButton =
-          find.widgetWithText(TextButton, 'Más...').first;
-      await tester.tap(breedItemTextButton);
+          final Finder breedItemTextButton =
+              find.widgetWithText(TextButton, 'Más...').first;
+          await tester.tap(breedItemTextButton);
 
-      await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
 
-      expect(find.byType(BreedDetailPage), findsOneWidget);
+          expect(find.byType(BreedDetailPage), findsOneWidget);
 
-      final Finder detailPageBackButtonItem =
+          final Finder detailPageBackButtonItem =
           find.widgetWithIcon(GestureDetector, Icons.arrow_back);
-      await tester.tap(detailPageBackButtonItem);
+          await tester.tap(detailPageBackButtonItem);
 
-      await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
 
-      expect(find.byType(BreedDetailPage), findsNothing);
-    });
+          expect(find.byType(BreedDetailPage), findsNothing);
+        });
 
     testWidgets('search breeds, verify found nothing', (tester) async {
       app.main();

@@ -1,15 +1,17 @@
 import 'dart:async';
 
-import 'package:aleteo_triqui/core/http/http_proxy_impl.dart';
-import 'package:aleteo_triqui/modules/breeds/blocs/breeds_bloc.dart';
-import 'package:aleteo_triqui/modules/splash/splash_page.dart';
-import 'package:aleteo_triqui/services/breeds_service.dart';
+import 'package:aleteo_triqui/features/breeds/data/repositories/breeds_repository.dart';
+import 'package:aleteo_triqui/features/breeds/domain/use_cases/get_breed_image_use_case.dart';
+import 'package:aleteo_triqui/features/breeds/domain/use_cases/get_breeds_use_case.dart';
 
-import 'blocs/navigator_bloc.dart';
-import 'blocs/onboarding_bloc.dart';
+import 'core/blocs/navigator_bloc.dart';
+import 'core/blocs/onboarding_bloc.dart';
+import 'core/entities/entity_bloc.dart';
 import 'core/http/config/remote_api_constants.dart';
-import 'entities/entity_bloc.dart';
-import 'providers/my_app_navigator_provider.dart';
+import 'core/http/http_proxy_impl.dart';
+import 'features/breeds/presentation/blocs/breeds_bloc.dart';
+import 'features/splash/presentation/splash_page.dart';
+import 'shared/navigation/my_app_navigator_provider.dart';
 
 /// Zona de configuración inicial
 final BlocCore blocCore = BlocCore();
@@ -27,14 +29,17 @@ void onboarding([
   /// Register modules to use
   /// Inicializamos el responsive y la ux del usuario
   if (!_init) {
+    final breedsRepository = BreedsRepository(
+      httpClient: HttpProxyImpl('https://api.thecatapi.com/v1').instance(),
+      breedsPath: RemoteApiConstants.breedsRoute,
+      breedImagesPath: RemoteApiConstants.breedImageRoute,
+    );
+
     blocCore.addBlocModule<BreedsBloc>(
       BreedsBloc.name,
       BreedsBloc(
-        breedsService: BreedsService(
-          httpClient: HttpProxyImpl('https://api.thecatapi.com/v1').instance(),
-          breedsPath: RemoteApiConstants.breedsRoute,
-          breedImagesPath: RemoteApiConstants.breedImageRoute,
-        ),
+        getBreedsUseCase: GetBreedsUseCase(breedsRepository),
+        getBreedImageUseCase: GetBreedImageUseCase(breedsRepository),
       ),
     );
 
@@ -43,7 +48,7 @@ void onboarding([
       OnboardingBloc.name,
       OnboardingBloc(
         [
-          () async {
+              () async {
             await Future.delayed(const Duration(milliseconds: 200), () {
               blocCore
                   .getBlocModule<NavigatorBloc>(NavigatorBloc.name)

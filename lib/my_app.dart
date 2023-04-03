@@ -1,7 +1,7 @@
-import 'package:aleteo_triqui/services/theme_config.dart';
+import 'package:aleteo_triqui/shared/theme/theme_config.dart';
 import 'package:flutter/material.dart';
 
-import 'providers/my_app_navigator_provider.dart';
+import 'shared/navigation/my_app_navigator_provider.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
