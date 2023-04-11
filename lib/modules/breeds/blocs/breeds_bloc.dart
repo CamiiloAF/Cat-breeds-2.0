@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aleteo_triqui/modules/breeds/models/breed_model.dart';
 import 'package:aleteo_triqui/services/breeds_service.dart';
 
 import '../../../entities/entity_bloc.dart';
@@ -29,7 +30,9 @@ class BreedsBloc extends BlocModule {
     _changeLoadingState(isLoading: true);
 
     try {
-      final breeds = await _breedsService.getBreeds();
+      final breedsJson = await _breedsService.getBreeds();
+      final breeds = breedsFromJson(breedsJson);
+
       _breedsBloc.value = _breedsBloc.value.copyWith(
         breeds: breeds,
         allBreads: [...breeds],
@@ -52,7 +55,8 @@ class BreedsBloc extends BlocModule {
 
   Future<BreedImage> getBreedImage(String referencedImageId) async {
     try {
-      return _breedsService.getBreedImage(referencedImageId);
+      final response = await _breedsService.getBreedImage(referencedImageId);
+      return breedImageFromJson(response);
     } on Failure {
       rethrow;
     } on Exception catch (_) {
@@ -64,11 +68,6 @@ class BreedsBloc extends BlocModule {
     _breedsBloc.value = _breedsBloc.value.copyWith(isLoading: isLoading);
   }
 
-  @override
-  FutureOr<void> dispose() {
-    _breedsBloc.dispose();
-  }
-
   void filterBreeds(String value) {
     final filteredBreeds = _breedsBloc.value.allBreads
         .where((bred) => bred.name.toLowerCase().contains(value.toLowerCase()))
@@ -77,5 +76,10 @@ class BreedsBloc extends BlocModule {
     _breedsBloc.value = _breedsBloc.value.copyWith(
       breeds: filteredBreeds,
     );
+  }
+
+  @override
+  FutureOr<void> dispose() {
+    _breedsBloc.dispose();
   }
 }

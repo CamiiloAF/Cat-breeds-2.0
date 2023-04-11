@@ -167,7 +167,7 @@ void main() {
 
       final response = await breedsService.getBreedImage('referencedImageId');
 
-      expect(response.height, 1445);
+      expect(response['height'], 1445);
     });
 
     test('Should throw a Failure when http client throws a DioError', () async {

@@ -1,8 +1,6 @@
 import 'package:network_bound_resource/network_bound_resource.dart';
 
 import '../exceptions/failure.dart';
-import '../modules/breeds/models/breed_image_model.dart';
-import '../modules/breeds/models/breed_model.dart';
 
 class BreedsService {
   final NetworkBoundResource _httpClient;
@@ -17,14 +15,14 @@ class BreedsService {
         _breedsPath = breedsPath,
         _breedImagesPath = breedImagesPath;
 
-  Future<List<Breed>> getBreeds() async {
+  Future<List<dynamic>> getBreeds() async {
     try {
       final response = await _httpClient.executeGet(
         path: _breedsPath,
         tableName: 'breeds',
       );
 
-      return breedsFromJson(response.data);
+      return response.data;
     } on Exception catch (_) {
       throw Failure(
         'Tuvimos un error al intentar cargar los datos, intente nuevamente',
@@ -32,14 +30,14 @@ class BreedsService {
     }
   }
 
-  Future<BreedImage> getBreedImage(String referencedImageId) async {
+  Future<Map<String, dynamic>> getBreedImage(String referencedImageId) async {
     try {
       final response = await _httpClient.executeGet(
         path: '$_breedImagesPath/$referencedImageId',
         tableName: 'breedsImages',
       );
 
-      return breedImageFromJson(response.data);
+      return response.data;
     } on Exception catch (_) {
       throw Failure(
         'Tuvimos un error al intentar cargar los datos, intente nuevamente',

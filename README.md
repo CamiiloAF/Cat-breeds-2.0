@@ -19,9 +19,9 @@ flutter run
     ├── entities                # Entidades de la app  
     ├── exceptions              # Excepciones del proyecto
     ├── modules                 # Contiene cada una de las funcionalidades de la app
-    │   ├─ folder_name          # Nombre del módulo
+    │   └─ folder_name          # Nombre del módulo
     │      ├── blocs            # Blocs de cada módulo
     │      ├── models           # Clases de datos del módulo
-    │      ├── ui               # Contiene todos los elementos de la UI del módulo
+    │      └──  ui              # Contiene todos los elementos de la UI del módulo
     ├── providers               # Archivos necesarios para la implementación de patrones de manejo de estado alternativos a los BLoC
     └── services                # Archivos necesarios para la comunicación con servicios externos

@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:aleteo_triqui/core/http/http_proxy_impl.dart';
 import 'package:aleteo_triqui/modules/breeds/blocs/breeds_bloc.dart';
 import 'package:aleteo_triqui/modules/splash/splash_page.dart';
+import 'package:aleteo_triqui/providers/http/config/remote_api_constants.dart';
+import 'package:aleteo_triqui/providers/http/provider/http_provider_impl.dart';
 import 'package:aleteo_triqui/services/breeds_service.dart';
 
 import 'blocs/navigator_bloc.dart';
 import 'blocs/onboarding_bloc.dart';
-import 'core/http/config/remote_api_constants.dart';
 import 'entities/entity_bloc.dart';
 import 'providers/my_app_navigator_provider.dart';
 
@@ -31,7 +31,8 @@ void onboarding([
       BreedsBloc.name,
       BreedsBloc(
         breedsService: BreedsService(
-          httpClient: HttpProxyImpl('https://api.thecatapi.com/v1').instance(),
+          httpClient:
+              HttpProviderImpl('https://api.thecatapi.com/v1').instance(),
           breedsPath: RemoteApiConstants.breedsRoute,
           breedImagesPath: RemoteApiConstants.breedImageRoute,
         ),

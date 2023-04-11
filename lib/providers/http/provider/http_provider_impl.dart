@@ -1,13 +1,13 @@
 import 'package:network_bound_resource/network_bound_resource.dart';
 
-import './repositories/http_proxy_interface.dart';
-import './interceptors/interceptor.dart';
+import './http_provider_interface.dart';
+import '../interceptors/interceptor.dart';
 
-class HttpProxyImpl extends HttpProxyInterface {
+class HttpProviderImpl extends HttpProviderInterface {
   late NetworkBoundResource _httpClient;
   final String baseUrl;
 
-  HttpProxyImpl(this.baseUrl) {
+  HttpProviderImpl(this.baseUrl) {
     _httpClient = NetworkBoundResource(
       baseUrl,
       interceptors: [AppInterceptors()],
